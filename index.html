@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Corgsplosion</title>
+
+  <style>
+  body {
+    box-sizing: border-box;
+    background: black no-repeat center;
+    background-size: contain;
+    height: 100vh;
+    margin: 0;
+    padding: 1rem;
+  }
+  </style>
+</head>
+<body>
+  <img src="corgi-on-a-spaceship.png">
+
+
+  <script type="text/javascript">
+  const explosionUrl = 'https://media.giphy.com/media/J0nJNHnnukpJm/giphy.gif';
+  const body = document.querySelector('body');
+    if (sessionStorage.getItem('explosion') === null) {
+      body.style.backgroundImage = `url(${explosionUrl})`;
+      sessionStorage.setItem('explosion', false);
+    }
+    else if (sessionStorage.getItem('explosion') === 'false') {
+      const randomInt = Math.floor(Math.random() * Math.floor(4000));
+      console.log(randomInt);
+
+      fetch(`https://api.giphy.com/v1/gifs/search?api_key=cmQ5wfr0nIZb7iSHe0CW0X4rCm4X3DV1&q=corgi&limit=1&offset=${randomInt}&rating=G&lang=en`)
+      .then (response => response.json())
+      .then (json => {
+
+        const gifInfo = json.data;
+        const gifUrl = gifInfo[0].images.original.url;
+
+        body.style.backgroundImage = `url(${gifUrl})`;
+      })
+    }
+  </script>
+</body>
+</html>
